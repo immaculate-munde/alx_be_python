@@ -1,26 +1,34 @@
-# Prompt for user input
+# daily_reminder.py
+# Single-task daily reminder using match-case and conditional modification for time-bound tasks
+
+# Prompt for a single task
 task = input("Enter your task: ").strip()
+
+# Prompt for priority and time-bound status
 priority = input("Priority (high/medium/low): ").strip().lower()
 time_bound = input("Is it time-bound? (yes/no): ").strip().lower()
 
-# Process task based on priority
+# React based on priority using match-case and modify the reminder if time-bound
 match priority:
     case "high":
-        message = f"Reminder: '{task}' is a HIGH priority task"
+        if time_bound == "yes":
+            print(f"Reminder: '{task}' is a high priority task that requires immediate attention today!")
+        else:
+            print(f"Reminder: '{task}' is a high priority task. Consider completing it when you have free time.")
     case "medium":
-        message = f"Reminder: '{task}' is a medium priority task"
+        if time_bound == "yes":
+            print(f"Reminder: '{task}' is a medium priority task that requires immediate attention today!")
+        else:
+            print(f"Reminder: '{task}' is a medium priority task. Consider completing it when you have free time.")
     case "low":
-        message = f"Note: '{task}' is a low priority task"
+        if time_bound == "yes":
+            # low priority but time-bound — still flag as note since example output used "Note:" for low
+            print(f"Note: '{task}' is a low priority task that requires immediate attention today!")
+        else:
+            print(f"Note: '{task}' is a low priority task. Consider completing it when you have free time.")
     case _:
-        message = f"'{task}' has an unknown priority level"
-
-# Check if task is time-bound
-if time_bound == "yes":
-    message += " that requires immediate attention today!"
-
-elif priority in ["high", "medium", "low"]:
-    # Add a suggestion only if priority was valid
-    message += ". Consider completing it when you have free time."
-
-# Output the final reminder
-print("\n" + message)
+        # Unknown priority: still provide guidance and respect time-bound flag
+        if time_bound == "yes":
+            print(f"Reminder: '{task}' has an unknown priority level that requires immediate attention today!")
+        else:
+            print(f"'{task}' has an unknown priority level. Consider specifying high, medium, or low.")
